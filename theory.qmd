@@ -1,0 +1,288 @@
+---
+title: "Teoría en Diseño Experimental"
+subtitle: "¿Pensaste que ibas a escapar de la teoría, verdad?"
+date: "2024-08-24"
+date-format: "DD-MM-YYYY"
+author:
+  - name: Rosario Aguilar
+    email: rosario.aguilar@newcastle.ac.uk
+    affiliations: Newcastle University
+  - name: Danilo Freire
+    email: danilo.freire@emory.edu
+    affiliations: Emory University
+format:
+  clean-revealjs:
+    self-contained: true
+    footer: "[Teoría](https://danilofreire.github.io/ldm/theory.html)"
+bibliography: references.bib
+transition: slide
+transition-speed: default
+scrollable: true
+engine: knitr
+editor:
+  render-on-save: true
+---
+
+```{r}
+#| echo: false
+#| results: hide 
+knitr::opts_chunk$set(echo = TRUE)
+# Function to check if a package is installed, and install it if not
+install_if_missing <- function(package) {
+  if (!require(package, character.only = TRUE)) {
+    install.packages(package, dependencies = TRUE)
+    library(package, character.only = TRUE)
+  }
+}
+
+# List of packages to ensure are installed and loaded
+packages <- c("emo", "fontawesome", "knitr", "rmarkdown", "kableExtra")
+
+# Apply the function to each package
+lapply(packages, install_if_missing)
+```
+
+# Causalidad y experimentos `r emo::ji('woman_scientist')` `r emo::ji('test_tube')` {background-color="#2d4563"}
+
+## ¿Por qué la teoría?
+
+:::{style="margin-top: 30px;"}
+:::
+
+::::{.columns}
+:::{.column width="50%"}
+:::{style="font-size: 24px;"}
+:::{.incremental}
+- Como investigadores, estamos interesados en preguntas de investigación sobre [cómo funciona el mundo]{.alert}.
+- Hay varios tipos de preguntas que podemos querer responder.
+  - **Preguntas descriptivas**: Descripciones de un fenómeno dado: por ejemplo, “_¿cómo los burócratas distribuyen su tiempo entre diferentes tareas?_”
+  - **Preguntas causales**: Preguntas sobre _cómo_ X afecta a Y: por ejemplo, “_¿Proporcionar formación profesional a los migrantes mejora su integración económica en el país receptor?_”
+:::
+:::
+:::
+
+:::{.column width="50%"}
+:::{.fragment .fade-in}
+![](./images/profs.jpg)
+:::
+:::
+::::
+
+## Teoría
+
+:::{style="margin-top: 30px;"}
+:::
+
+::::{.columns}
+:::{.column width="50%"}
+:::{style="font-size: 26px;"}
+:::{.incremental}
+- ¿Cuál es el fenómeno que queremos explicar?
+  - **Nuestro resultado** (lo vamos a llamar **Y**)
+
+- ¿La causa que teorizamos lleva a observar cambios en Y?
+  - **Nuestro tratamiento** (en el contexto de experimentos) (lo vamos a llamar $\mathcal{T}$)
+
+- [¿Cuál es la teoría del cambio?]{.alert}
+
+- En última instancia, estamos interesados en cómo [dos conceptos teóricos están relacionados]{.alert}, medidos por [variables observadas]{.alert} $\mathcal{T}$ (nuestro tratamiento) y Y (nuestros resultados)
+:::
+:::
+:::
+
+:::{.column width="50%"}
+:::{.fragment .fade-in}
+![](./images/cause_association.png)
+:::
+:::
+::::
+
+## ¿Por qué es importante la teoría?
+
+:::{style="margin-top: 40px;"}
+:::
+
+:::{style="font-size: 28px;"}
+:::{.incremental}
+- Nuestra teoría nos permite:
+
+- Derivar [implicaciones observables]{.alert} (hipótesis) que probamos en el mundo real.
+- [Separar dos experimentos completamente no relacionados]{.alert} con propiedades empíricas idénticas para Y y $\mathcal{T}$
+    - Por ejemplo, podríamos tener dos experimentos de tamaño idéntico con la misma asignación de tratamiento, los mismos resultados observados, [pero con teorías subyacentes significativamente diferentes]{.alert}.
+:::
+:::
+
+## De la teoría al diseño de investigación
+
+:::{style="margin-top: 40px;"}
+:::
+
+::::{.columns}
+:::{.column width="50%"}
+:::{style="font-size: 28px;"}
+:::{.incremental}
+- Luego necesitamos conectar lo que nos interesa con lo que observamos en el mundo real $\rightarrow$ [operacionalización de conceptos teóricos]{.alert}.
+
+- ¿Cómo vamos a _medir_ nuestros resultados? ¿Cómo vamos a _manipular_ la causa de interés?
+
+- Este vínculo estrecho entre teoría y diseño de investigación nos ayuda a interpretar los resultados de nuestro experimento.
+:::
+:::
+:::
+
+:::{.column width="50%"}
+:::{.fragment .fade-in}
+![](./images/science-method.jpg)
+:::
+:::
+::::
+
+## Medición
+
+:::{style="margin-top: 40px;"}
+:::
+
+::::{.columns}
+:::{.column width="50%"}
+:::{style="font-size: 25px;"}
+:::{.incremental}
+- [La medición es el vínculo entre la teoría de un investigador y un diseño de investigación]{.alert} (experimental).
+
+- La medición sigue entonces de nuestra teoría de cómo creemos que funciona el mundo y cómo nuestro tratamiento manipula ese mundo.
+
+- El caso ideal es la medición directa del fenómeno de interés sin error. Pero esto generalmente no es posible.
+
+- A menudo solo podemos medir [indicadores conectados al fenómeno subyacente de interés]{.alert}.
+:::
+:::
+:::
+
+:::{.column width="50%"}
+:::{.fragment .fade-in}
+![](./images/measurement_error_meme.png)
+:::
+:::
+::::
+
+## Consideremos el ejemplo de nuestro experimento
+
+:::{style="margin-top: 40px;"}
+:::
+
+:::{.incremental}
+- ¿Cuál es el resultado de interés (Y)?
+
+- ¿Cuál es la causa de interés ($\mathcal{T}$)?
+
+- ¿Cuál puede ser una teoría que conduzca a este diseño experimental?
+
+- ¿Cuál puede ser la hipótesis principal?
+:::
+
+## Medición de tratamientos
+
+:::{style="margin-top: 40px;"}
+:::
+
+:::{style="font-size: 28px;"}
+:::{.incremental}
+- [¿Podemos manipular directamente $\mathcal{T}$?]{.alert} (concepto de tratamiento subyacente de interés)
+
+  - Consideraciones éticas, logísticas y de otro tipo pueden limitar nuestra capacidad de manipular todos los indicadores de $\mathcal{T}$.
+  - En el mejor de los casos, podemos cambiar [algunos de sus indicadores]{.alert}.
+  - Diseñamos un tratamiento, **T**, para hacerlo.
+  
+- [¿Cómo se relaciona **T** con $\mathcal{T}$?]{.alert}
+
+  - Pero **T** puede estar manipulando otras cosas (tratamientos combinados).
+
+- [¿Todos recibieron **T**?]{.alert}
+
+  - Medir el cumplimiento.
+:::
+:::
+
+## Pensando en el tratamiento...
+
+:::{style="margin-top: 40px;"}
+:::
+
+- Ahora piensen en ustedes mismos como los investigadores.
+
+- En parejas o grupos de tres:
+  - Generen hipótesis sobre la dirección del efecto promedio esperado
+  - Generen hipótesis sobre posibles efectos heterogéneos
+  - Generen el tamaño del efecto esperado
+  - Discutan las teorías detrás de la hipótesis y el tamaño del efecto esperado, con énfasis en la importancia de la teoría
+  - ¿Otras formas de medir el resultado o modo de administrar el tratamiento?
+
+## Midiendo los resultados
+
+:::{style="margin-top: 40px;"}
+:::
+
+:::{style="font-size: 26px;"}
+:::{.incremental}
+- Como científicos sociales, [no podemos observar directamente el valor verdadero del concepto]{.alert} de resultado para la mayoría de los resultados que nos interesan.
+
+- Ejemplos:
+  - Respuestas correctas a problemas (indicadores) para la aptitud matemática subyacente (el fenómeno real).
+  - Días sin comida (indicadores) para el hambre (el fenómeno real).
+  - Informes de sobornos (indicadores) para la corrupción (el fenómeno real).
+  
+- Además, el concepto de resultado subyacente puede estar incluso en debate (por ejemplo, la democracia).
+
+- Si nuestros indicadores no miden el concepto subyacente que nos interesa, entonces es posible que no podamos aprender mucho, incluso si tenemos un experimento por lo demás muy sólido.
+:::
+:::
+
+## Volviendo a nuestro experimento...
+
+:::{style="margin-top: 40px;"}
+:::
+
+- ¿Qué elementos están diseñados para medir nuestro resultado teórico de interés (**Y**)?
+  - ¿Alguna preocupación sobre esta operacionalización?
+  - ¿Otras formas posibles de medir Y?
+  
+## Cosas a considerar
+
+:::{style="margin-top: 40px;"}
+:::
+
+::::{.columns}
+:::{.column width="50%"}
+:::{style="font-size: 25px;"}
+:::{.incremental}
+- Los problemas con la medición pueden llevarte a sacar [inferencias causales incorrectas]{.alert} de tu estudio (error sistemático, más sesgo).
+
+- La medición con ruído reduce la potencia (error aleatorio, menos precisión) [discutiremos esto después].
+
+- La recolección de datos a menudo ocupa una porción muy grande del [tiempo y los recursos financieros]{.alert} disponibles en el presupuesto del proyecto.
+:::
+:::
+:::
+
+:::{.column width="50%"}
+:::{.fragment .fade-in}
+![](./images/potter.jpg)
+:::
+:::
+::::
+
+## Para concluir
+
+:::{style="margin-top: 40px;"}
+:::
+
+:::{.incremental}
+- Como investigadores, tenemos teorías sobre cómo funciona el mundo.
+
+- Algunas de estas teorías implican afirmaciones causales, y podemos usar experimentos para probarlas empíricamente (es decir, con los datos que observamos del mundo real).
+
+- La medición conecta la teoría y el diseño de la investigación.
+
+- Observamos indicadores del mundo real de los conceptos teóricos más amplios que nos interesan.
+:::
+
+# {background-image="./images/preguntas.jpg"}
