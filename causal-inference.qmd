@@ -1,0 +1,502 @@
+---
+title: "Inferencia Causal"
+subtitle: "Correlación no implica causalidad... ¿o sí?"
+date: "2024-08-24"
+date-format: "DD-MM-YYYY"
+author:
+  - name: Julia Seither
+    email: julia.seither@urosario.edu.co
+    affiliations: Universidad Del Rosario
+  - name: Danilo Freire
+    email: danilo.freire@emory.edu
+    affiliations: Emory University
+format:
+  clean-revealjs:
+    self-contained: true
+    footer: "[Inferencia Causal](https://danilofreire.github.io/ldm/causal-inference.html)"
+bibliography: references.bib
+transition: slide
+transition-speed: default
+scrollable: true
+engine: knitr
+editor:
+  render-on-save: true
+---
+
+```{r}
+#| echo: false
+#| results: hide 
+knitr::opts_chunk$set(echo = TRUE)
+# Function to check if a package is installed, and install it if not
+install_if_missing <- function(package) {
+  if (!require(package, character.only = TRUE)) {
+    install.packages(package, dependencies = TRUE)
+    library(package, character.only = TRUE)
+  }
+}
+
+# List of packages to ensure are installed and loaded
+packages <- c("emo", "fontawesome", "knitr", "rmarkdown", "kableExtra")
+
+# Apply the function to each package
+lapply(packages, install_if_missing)
+```
+
+# ¿Por qué importa la inferencia causal? `r emo::ji('thinking_face')` `r emo::ji('detective')` {background-color="#2d4563"}
+
+## ¿Por qué a los científicos sociales y los legisladores les deberían importar la causalidad?
+
+:::::{.columns}
+::::{.column width="50%"}
+:::{.incremental}
+- [Empezamos con ustedes: ¿por qué motivos?]{.alert}
+
+- Algunas razones:
+  - Aislar y controlar variables
+  - Comparar alternativas
+  - Facilitar la replicación
+  - Mejorar la toma de decisiones
+  - [Cerrar la brecha entre intención e impacto real de nuestras
+    acciones]{.alert}
+:::
+::::
+
+::::{.column width="50%"}
+:::{.fragment .fade-in}
+![](./images/clinical_trials.png)
+:::
+
+:::{.fragment .fade-in}
+![](./images/maybe.png)
+:::
+::::
+:::::
+
+## Enfoque Contrafactual de la Inferencia Causal
+### Cambios recientes en la investigación en ciencias sociales
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{style="font-size: 28px;"}
+:::{.incremental}
+- Históricamente, la [causalidad inversa]{.alert} y el [sesgo causado por variables omitidas]{.alert} han sido problemáticos para muchas investigaciones de las ciencias sociales que buscan hacer afirmaciones causales.
+
+- Recientemente, el [enfoque contrafactual]{.alert} ha sido adoptado en las ciencias sociales como marco para la inferencia causal.
+
+- Esto representa un [gran cambio]{.alert} en la investigación:
+  - Ser *más precisos* sobre lo que entendemos por efectos causales.
+  - Uso de aleatorización o de *diseños pseudo-aleatorios*
+  - *Más colaboraciones* entre investigadores y profesionales.
+:::
+:::
+
+## Mayor interés académico en métodos de inferencia causal 
+
+![Proporción de artículos publicados que utilizan experimentos en las dos principales revistas de sociología, economía y ciencias políticas (1990-2020). Fuente: @mize2022past](./images/exp-methods01.jpg)
+
+## Mayor interés académico en métodos de inferencia causal 
+
+![Proporción de artículos publicados que utilizan experimentos en sociología, ciencias políticas y economía según el tipo de método experimental utilizado (1990-2020). Fuente: @mize2022past](./images/exp-methods02.jpg)
+
+## Mayor interés en métodos de inferencia causal
+
+![](./images/trends.png)
+
+## Premios Nobel en Economía
+### Banerjee, Duflo y Kremer
+
+![](./images/nobel01.png)
+
+## Premios Nobel en Economía
+### Card, Angrist y Imbens
+
+![](./images/nobel02.png)
+
+# ¿Qué es la causalidad? `r emo::ji('woman_shrugging')` `r emo::ji('man_shrugging')` {background-color="#2d4563"}
+
+## "X causó Y" es una afirmación sobre lo que no sucedió
+
+:::{style="margin-top: 30px;"}
+:::
+
+::::{.columns}
+::::{.column width="50%"}
+:::{style="font-size: 28px;"}
+:::{.incremental}
+- En el enfoque contrafactual: ["Si X no hubiera ocurrido, [entonces Y no habría ocurrido."]{.fragment .fade-in .alert}]{.fragment .fade-in}
+
+- Los experimentos nos ayudan a aprender acerca de las afirmaciones contrafactuales y  basadas en [la manipulación de la causalidad]{.alert}.
+
+-  No es erróneo _conceptualizar_  "causa" de otra manera. Pero ha sido productivo trabajar en este marco hipotético [@brady2008causation].
+:::
+:::
+::::
+
+::::{.column width="50%"}
+:::{.fragment .fade-in}
+![Directed acyclic graph](./images/dag.png)
+:::
+::::
+::::
+
+## Cómo interpretar "X causa Y" en este enfoque
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{.incremental}
+1. "X causa Y" no implica necesariamente que W y V no causen Y: [X es parte de la historia, no toda la historia]{.alert}. (No se necesita conocer la historia completa para saber si X causa Y).
+
+2. "X causa Y" requiere un **contexto**: los fósforos causan la llama pero requieren oxígeno; las aulas pequeñas mejoran los resultados de las pruebas, pero requieren profesores experimentados y financiación [@cartwright2012evidence].
+
+3. "X causa Y" puede significar "Si X ocurre, la probabilidad de Y es mayor que sin que X ocurra". o "Sin que X ocurra no hay Y". [Cualquiera de las dos afirmaciones es compatible]{.alert} con la idea contrafactual.
+:::
+
+## Cómo interpretar "X causa Y" en este enfoque
+
+:::{.incremental}
+4. [No es necesario conocer el mecanismo]{.alert} para establecer que X causa Y. El mecanismo puede ser complejo y puede involucrar probabilidad: X causa Y a veces debido a A y a veces debido a B.
+
+5. La causalidad contrafactual no requiere "una secuencia espacio-temporal continua de intermediarios causales"
+    - Ejemplo: la persona A planifica el evento Y. La acción de la persona B detendría a Y (digamos, un golpe aleatorio de un extraño). La persona C no sabe sobre la persona A o la acción Y, pero detiene a B (quizá porque piensa que B se va a tropezar). Entonces, la Persona A realiza la acción Y y la Persona C causa la acción Y (sin la acción de la Persona C, Y no habría ocurrido)[@holland:1986].
+
+6. Correlación no es igual a causalidad.
+:::
+
+## Ejercicio: equinácea
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{.incremental}
+- Un amigo suyo dice que tomar equinácea (un remedio tradicional) reduce la duración de los resfriados.
+
+- Si adoptamos un enfoque contrafactual, ¿qué nos dice implícitamente esta afirmación sobre el contrafactual? ¿Qué otros contrafactuales podrían ser posibles y por qué?
+:::
+
+# Resultados potenciales {background-color="#2d4563"}
+
+## Resultados potenciales
+
+:::{style="margin-top: 30px;"}
+:::
+
+::::{.columns}
+:::{.column width="50%"}
+:::{style="font-size: 28px;"}
+:::{.incremental}
+- Para cada unidad asumimos que hay dos **valores posteriores al tratamiento**: $Y_i(1)$ y $Y_i(0)$.
+
+- $Y_i(1)$ es el resultado que **obtendría**  la unidad *si* recibe el tratamiento ($T_i = 1$).
+
+- $Y_i(0)$ es el resultado que **obtendría**  la unidad *si* no recibe el tratamiento ($T_i = 0$).
+:::
+:::
+:::
+
+:::{.column width="50%"}
+:::{.fragment .fade-in}
+![](./images/forks.jpg){width="60%"}
+:::
+:::
+::::
+
+## Definición de efecto causal
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{.incremental}
+- El **efecto causal** del tratamiento (relativo al control) es:
+$\tau_i = Y_i (1) - Y_i(0)$
+
+- Tenga en cuenta que [hemos pasado a usar $T$ para indicar nuestro tratamiento]{.alert} (del cuál queremos saber el efecto). $X$ se utilizará para las variables explicatiorias. 
+:::
+
+## Características clave de esta definición de efecto causal
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{style="font-size: 26px;"}
+1. Debe [definir la condición de control]{.alert} para definir un efecto causal.
+    - Digamos que $T = 1$ significa una reunión comunitaria para discutir la salud pública. ¿Es $T = 0$ que no hay reunión en absoluto? ¿Es $T = 0$ una reunión comunitaria sobre un tema diferente? ¿Es $T = 0$ un volante sobre salud pública?
+    - La frase ``efecto causal de $T$ en $Y$'' no tiene sentido sin saber qué significa no tener $T$.
+2. Cada unidad individual $i$ tiene su propio efecto causal $\tau_i$.
+3. Pero no podemos medir el efecto causal a nivel individual, porque no podemos observar $Y_i (1)$ y $Y_i(0)$ al mismo tiempo. Esto se conoce como el [problema fundamental de la inferencia causal]{.alert}. Lo que observamos es $Y_i$:
+
+$$Y_i = T_iY_i(1) + (1-T_i)Y_i(0)$$
+:::
+
+## Suponga que sabemos el valor de $Y_i(1)$ y $Y_i(0)$  
+### ¡Esto no es posible!
+
+| $i$      | $Y_i(1)$ | $Y_i(0)$ | $\tau_i$ |
+|----------:|:----------:|:----------:|:----------:|
+| Andrei   | 1        | 1        | 0        |
+| Bamidele | 1        | 0        | 1        |
+| Claire   | 0        | 0        | 0        |
+| Deepal   | 0        | 1        | -1       |
+- Conocemos el efecto del tratamiento para cada individuo.
+- Nótese la heterogeneidad en los efectos del tratamiento a nivel individual.
+- Pero solo sabemos del valor de una de los resultados potenciales para cada individuo como máximo, lo que significa que no conocemos estos efectos del tratamiento.
+
+## Efecto causal promedio
+
+- Si bien no podemos medir el efecto causal individual, $\tau_i = Y_i (1)-Y_i (0)$, podemos asignar sujetos al azar a las condiciones de tratamiento y control para estimar el **efecto causal promedio**, $\bar{\tau}_i$:
+
+$$\overline{\tau_i} = \frac{1}{N}\sum_{i = 1}^N (Y_i (1) -Y_i (0)) = \overline{Y_i (1) -Y_i (0)}$$
+
+- El efecto causal promedio también se conoce como [efecto promedio del tratamiento (average treatment effect, ATE)]{.alert}.
+ 
+- Explicaremos en más detalle cómo calcularlo después de discutir la asignación aleatoria del tratamiento en la siguiente sección.
+ 
+## Estimandos y preguntas causales
+
+:::{style="margin-top: 30px;"}
+:::
+
+- Antes de discutir la aleatorización y cómo esta nos permite estimar el ATE, tengan en cuenta que el ATE es un tipo de estimando.
+- Un estimando es una [cantidad sobre la que se desea aprender]{.alert} (a partir de los datos). Es el objetivo de la investigación que *ustedes* establecieron.
+- Ser preciso con la pregunta de investigación significa ser preciso con el estimando. Para preguntas causales, esto significa especificar:
+   - La variable de resultado
+   - Las condiciones de tratamiento y control
+   - La población de estudio
+   
+## Otros tipos de estimandos que pueden interesarle
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{style="font-size: 27px;"}
+:::{.incremental}
+- El [ATE para un subgrupo en particular]{.alert}, también conocido como efecto promedio condicional del tratamiento (conditional average treatment effect, [CATE]{.alert})
+- Diferencias en el CATE: diferencias en el efecto promedio del tratamiento para un grupo en comparación con otro grupo.
+- El [ATE solo para las unidades tratadas]{.alert}, también conocido como efecto promedio del tratamiento en los tratados (average treatment effect on the treated, [ATT]{.alert})
+- El ATE local (ATE Local, [LATE]{.alert}). "Local" = aquellos cuyo estado de tratamiento cambiaría por el estímulo de un diseño de estímulo (también conocido como efecto causal promedio del cumplidor) o aquellos en el vecindario de una discontinuidad para un diseño de regresión discontinua.
+- Analizaremos los estimandos en detalle en el módulo de estimaciones y estimadores.
+:::
+:::
+
+# Aleatorización de la asignación del tratamiento `r emo::ji('dice')` `r emo::ji('shuffle')` {background-color="#2d4563"}
+
+## Aleatorización de la asignación del tratamiento
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{style="font-size: 27px;"}
+:::{.incremental}
+- La aleatorización significa que cada observación tiene una [probabilidad conocida de asignación a condiciones experimentales *entre* 0 y 1]{.alert}.
+  - [Ninguna]{.alert} unidad de la muestra experimental se asigna al tratamiento [con total certeza (probabilidad = 1) o al control con total certeza (probabilidad = 0)]{.alert}.
+- Las probabilidad de asignación al tratamiento puede [variar para cada unidad]{.alert}.
+  - Por ejemplo, la probabilidad puede variar según el grupo: las mujeres pueden tener un 25\% de probabilidad de ser asignadas al tratamiento, mientras que los hombres tienen una probabilidad diferente.
+  - Incluso puede variar de una persona a otra, claro está que eso complicaría el análisis.
+:::
+:::
+
+## Asignación aleatoria versus muestreo aleatorio
+
+:::{.incremental}
+- Aleatorización (del tratamiento): [asignación de sujetos]{.alert} con probabilidad conocida a condiciones experimentales.
+  - Esta asignación aleatoria de tratamiento puede combinarse con [cualquier tipo de muestra]{.alert} (muestra aleatoria, muestra de conveniencia, etc.).
+  - Pero el tamaño y otras características de su muestra afectarán su poder y su capacidad para extrapolar su hallazgo a otras poblaciones.
+- Muestreo aleatorio (de la población): [selección de sujetos de una población]{.alert} a la muestra con probabilidad conocida.
+:::
+
+## La aleatorización es poderosa (1)
+
+:::{style="margin-top: 30px;"}
+:::
+
+- Queremos conocer el valor del ATE, $\overline{\tau_i} = \overline{Y_i (1) -Y_i (0)}$.
+- Aprovecharemos el hecho de que la media de diferencias es igual a la diferencia de medias:
+
+ $$\text{ATE}= \overline{Y_i (1) -Y_i (0)} = \overline{Y_i (1)} - \overline{Y_i (0)}$$
+
+## La aleatorización es poderosa (2)
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{style="font-size: 22px;"}
+- Asignamos *aleatoriamente* algunas de nuestras unidades al tratamiento. Para estas unidades tratadas, medimos el resultado $Y_i | T_i = 1$, que es lo mismo que $Y_i(1)$ para estas unidades que asignamos al tratamiento.
+- Debido a que estas unidades se asignaron al azar al tratamiento, estos $Y_i = Y_i (1)$ para las unidades tratadas representan los $Y_i(1)$ para todas nuestras unidades.
+- En valor esperado (o en promedio a través de experimentos repetidos (escrito $E_R[]$)):
+
+$$E_R [\overline {Y_i} | T_i = 1] = \overline{Y_i (1)}$$.
+
+- $\overline {Y} | T_i = 1$ es un estimador insesgado de la media poblacional de resultados potenciales bajo el tratamiento.
+- La misma lógica se aplica a las unidades asignadas aleatoriamente al control:
+
+$$E_R[\overline{Y_i}| T_i = 0] = \overline{Y_i (0)}$$.
+:::
+
+## La aleatorización es poderosa (3)
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{style="font-size: 25px;"}
+- Entonces podemos escribir el estimador para el ATE:
+
+$$\hat{\overline{\tau_i}} = (\overline {Y_i(1)} | T_i = 1) - (\overline {Y_i (0)} | T_i = 0)$$
+
+- En valor esperado, o en promedio en experimentos repetidos, $\hat{\overline {\tau_i}}$ es igual al ATE:
+
+$$E_R[Y_i | T_i = 1] - E_R [Y_i | T_i = 0] = \overline {Y_i (1)} - \overline{Y_i (0)}$$.
+
+- Entonces podemos tomar la diferencia de estos estimadores insesgados de $\overline{Y_i (1)}$ y
+ $\overline{Y_i(0)}$ para  obtener una estimación insesgada del ATE.
+:::
+
+## Muestreo aleatorio
+
+![](./images/randomsampling.png)
+
+## Resultados potenciales
+Cada hogar $i$ tiene [$Y_i(0)$]{.fragment .highlight-blue} y [$Y_i(1)$]{.fragment .highlight-red}.
+
+![](./images/randomsampling_redblue_plain.png)
+
+## Asignación aleatoria a la condición roja (1) o azul (0)
+
+![](./images/randomassignment.png)
+
+## Tres supuestos clave
+
+Para hacer afirmaciones causales con un experimento (o para juzgar si creemos en las afirmaciones de un estudio), necesitamos tres supuestos básicos:
+
+:::{.incremental}
+ - [Asignación aleatoria de sujetos al tratamiento]{.alert}, lo que implica que recibir el tratamiento es estadísticamente independiente de los resultados potenciales de los sujetos.
+
+ - Supuesto de estabilidad del valor bajo tratamiento para cada unidad ([SEVTU]{.alert}).
+
+ - [Excluibilidad]{.alert}, que significa que los valores potenciales de un sujeto responden solo al tratamiento definido y no a otros factores externos que pueden estar correlacionados con el tratamiento.
+:::
+
+## Supuesto clave: SEVTU, parte 1
+
+1. [No interferencia]{.alert}: la resultado potencial de un sujeto refleja solo si ese sujeto recibe el tratamiento. No se ve afectado por cómo se asigna el tratamiento a otros sujetos.
+
+   - Una violación clásica es el caso de las vacunas y sus efectos secundarios.
+
+   - Imaginen que yo fui asignado a la condición de control (sin vacuna). Que me enferme ($Y_i (0)$), depende de la asignación al tratamiento de otras personas (en caso de que sí tomen la vacuna), ¡es como si tuviera dos $Y_i(0)$ diferentes!
+
+   - SEVTU (= Supuesto de estabilidad del valor bajo el tratamiento para cada unidad )
+
+## Supuesto clave: SEVTU, parte 2
+
+:::{style="margin-top: 30px;"}
+:::
+
+2. [No hay variaciones ocultas del tratamiento]{.alert}
+
+   - Digamos que el tratamiento es vacunarse, pero hay dos tipos de vacunas y tienen diferentes ingredientes.
+
+   - Un ejemplo de una violación al supuesto es que el enfermarme luego de haberme puesto la vacuna ($Y_i(1)$) dependa de la vacuna que recibí. ¡Habría dos $Y_i(1)$ diferentes!
+
+## Supuesto clave: Excludibilidad
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{style="font-size: 28px;"}
+- [La asignación al tratamiento no tiene ningún efecto sobre los resultados, excepto el que puede tener  a través del tratamiento]{.alert}.
+  - Es importante definir el tratamiento con precisión.
+  - Es importante también mantener la simetría entre los grupos de tratamiento y control (por ejemplo, ocultando cuál fue la asignación al tratamiento, tener los mismos procedimientos de recopilación de datos para todos los sujetos del estudio, etc.), de modo que la asignación al tratamiento solo afecte el tratamiento recibido, no otras cosas como las interacciones con los investigadores que no deberían ser parte del tratamiento.
+:::  
+  
+## La aleatorización es poderosa (4)
+
+:::{style="margin-top: 30px;"}
+:::
+
+- Si la intervención es aleatoria, entonces quién recibe o no la intervención no está relacionado con las características personales de los posibles destinatarios.
+
+- La aleatorización hace que aquellos que fueron seleccionados al azar para no recibir la intervención sean buenos sustitutos del contrafactual para aquellos que fueron seleccionados al azar para recibir el tratamiento, y viceversa.
+
+- Nos debemos preocupar con esto si la intervención no fue aleatorizada (= un estudio observacional).
+
+# Estudios aleatorizados frente a observacionales {background-color="#2d4563"}
+
+## Diferentes tipos de estudios
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{.incremental}
+- Estudios aleatorizados
+
+   - Aleatorizar el tratamiento y luego medir los resultados
+
+- Estudios observacionales
+
+   - El tratamiento no se asigna al azar. [Se observa, pero no se manipula]{.alert}.
+:::
+
+## Ejercicio: aprendiendo acerca de sus conocimientos previos
+
+:::{style="font-size: 28px;"}
+**Discutir en grupos pequeños:** Ayúdenme a diseñar el próximo proyecto para responder
+una de estas preguntas (o una de sus propias preguntas causales). Solamente planteen las
+características claves de dos diseños: uno observacional y el otro aleatorio.
+
+**Preguntas de investigación de ejemplo:**
+
+  - ¿Aumentan la confianza y la coperación los proyectos de reconstrucción impulsados por la comunidad en Liberia? Ver: [Informe 40 de políticas públicas de EGAP](https://egap.org/resource/brief-40-development-assistance-and-collective-action-capacity/)
+
+  - ¿Puede el monitoreo comunitario aumentar el uso de clínicas y disminuir la mortalidad infantil en Uganda? Puede ver: [Informe 58 de políticas públicas de EGAP](https://egap.org/resource/does-bottom-up-accountability-work-evidence-from-uganda/)
+:::
+  
+## Ejercicio: estudios observacionales versus estudios aleatorizados
+
+**Tareas:**
+
+  1. Esbocen un diseño de un estudio observacional ideal (sin aleatorización, sin
+     control por parte del investigador pero con recursos infinitos para la recopilación de datos). ¿Cuáles son las preguntas que haría un lector crítico frente a la afirmación de que sus resultado reflejan una relación causal?
+
+  2.  Esbocen un diseño de estudio experimental ideal (que incluya  aleatorización). ¿Cuáles son las preguntas que haría un lector crítico frente a la afirmación de que sus resultado reflejan una relación causal?
+
+## Discutir
+
+:::{style="margin-top: 30px;"}
+:::
+
+- ¿Cuáles fueron los componentes clave y las fortalezas y debilidades de los estudios aleatorizados?
+
+- ¿Cuáles fueron los componentes clave y las fortalezas y debilidades de los estudios observacionales?
+
+
+## Generalizabilidad y validez externa
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{style="font-size: 28px;"}
+:::{.incremental}
+- La aleatorización aporta una alta validez interna a un estudio: confianza en que hemos aprendido el efecto causal de un tratamiento en una variable de resultado.
+
+- Pero el hallazgo de un estudio en particular en un lugar particular y en un momento particular puede no ser válido en otros entornos (es decir, validez externa).
+
+- Esta es una preocupación general, no solo una preocupación para los estudios aleatorizados.
+
+- [La iniciativa Metaketa de EGAP's](https://egap.org/our-work/the-metaketa-initiative/) trabaja para acumular conocimientos mediante la planificación previa de un metanálisis de múltiples estudios que tienen una alta validez interna debido a la aleatorización.
+:::
+:::
+
+## Referencias
+
+[Informe 40 de políticas públicas  de EGAP: Asistencia para el desarollo y la capacidad de acción colectiva](https://egap.org/resource/brief-40-development-assistance-and-collective-action-capacity/)
+
+[Informe 50 de políticas públicas de EGAP: ¿Funciona la rendición de cuentas que parte desde las bases sociales?](https://egap.org/resource/does-bottom-up-accountability-work-evidence-from-uganda/)
+
+
+
+
+
+
+
+
+
