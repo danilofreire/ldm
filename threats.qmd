@@ -1,7 +1,7 @@
 ---
 title: "Amenazas a la validez interna de los experimentos aleatorizados"
 subtitle: "Cómo (intentar) evitar que tu experimento se convierta en un desastre"
-date: "2024-08-24"
+date: "2024-08-29"
 date-format: "DD-MM-YYYY"
 author:
   - name: Danilo Freire
@@ -55,7 +55,7 @@ editor:
 :::
 ::::
 
-# Deserción {background-color="#2d4563"}
+# Deserción `r emo::ji('running')` {background-color="#2d4563"}
 
 ## Deserción (variables de resultado con datos faltantes)
 ### Attrition
