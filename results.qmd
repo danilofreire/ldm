@@ -4,9 +4,9 @@ subtitle: "Cómo leer una tabla de regresión"
 date: "2024-08-29"
 date-format: "DD-MM-YYYY"
 author:
-  - name: Danilo Freire
-    email: danilo.freire@emory.edu
-    affiliations: Emory University
+  - name: Julia Seither
+    email: julia.seither@urosario.edu.co
+    affiliations: Universidad del Rosario
 format:
   clean-revealjs:
     self-contained: true
