@@ -1,0 +1,290 @@
+---
+title: "Amenazas a la validez interna de los experimentos aleatorizados"
+subtitle: "Cómo (intentar) evitar que tu experimento se convierta en un desastre"
+date: "2024-08-24"
+date-format: "DD-MM-YYYY"
+author:
+  - name: Danilo Freire
+    email: danilo.freire@emory.edu
+    affiliations: Emory University
+format:
+  clean-revealjs:
+    self-contained: true
+    footer: "[Amenazas](https://danilofreire.github.io/ldm/threats.html)"
+bibliography: references.bib
+transition: slide
+transition-speed: default
+scrollable: true
+engine: knitr
+editor:
+  render-on-save: true
+---
+
+# Revisión de los supuestos principales `r emo::ji('man_teacher')` `r emo::ji('books')` {background-color="#2d4563"}
+
+## Puntos clave de esta presentación
+
+:::{style="margin-top: 30px;"}
+:::
+
+::::{.columns}
+:::{.column width="50%"}
+:::{style="font-size: 27px;"}
+ - Deserción (variables de resultado con datos faltantes)
+
+ - Incumplimiento
+
+ - Derrame
+
+ - Efecto Hawthorne
+
+ - Tratamiento diferencial de los distintos brazos de tratamiento
+
+- Repaso de los supuestos principales
+
+  1. Exclusión 
+
+  2. No interferencia
+
+  3. Asignación aleatoria de sujetos al tratamiento
+:::
+:::
+
+:::{.column width="50%"}
+![](./images/though-so.jpg)
+:::
+::::
+
+# Deserción {background-color="#2d4563"}
+
+## Deserción (variables de resultado con datos faltantes)
+### Attrition
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{style="font-size: 25px;"}
+:::{.incremental}
+- Algunas unidades pueden tener [datos faltantes para las variables de resultado]{.alert} (= las unidades desertan) cuando:
+  - algunos encuestados no pueden ser encontrados o se niegan a participar en la recolección de datos finales.
+  - se pierden algunos registros.
+
+- Esto es problemático cuando los datos faltantes han sido ocasionados por el tratamiento.
+
+  - Por ejemplo, el tratamiento puede haber provocado la migración de unidades y no hay forma de acceder a ellas.
+
+- Si analizamos los datos descartando unidades con datos faltantes para la variable de resultado, [entonces ya no estaríamos comparando grupos de tratamiento y control similares]{.alert}.
+:::
+:::
+
+# ¿Qué podemos hacer? `r emo::ji('thinking_face')` {background-color="#2d4563"}
+
+## ¿Qué podemos hacer?
+### Un checklist
+
+:::{style="margin-top: 30px;"}
+:::
+
+::::{.columns}
+:::{.column width="50%"}
+:::{style="font-size: 25px;"}
+:::{.incremental}
+- Compruebe si las [tasas de deserción son similares]{.alert} en los grupos de tratamiento y control.
+
+- Compruebe si las covariables de los grupos de tratamiento y control tienen [padrones similares]{.alert}.
+
+- [No elimine las observaciones con datos faltantes]{.alert} en las variables de resultado.
+
+- A veces, cuando faltan datos en la variable de resultados, [podemos acotar ("bound") nuestras estimaciones]{.alert} del efecto del tratamiento.
+:::
+:::
+:::
+
+:::{.column width="50%"}
+![](./images/data-loss.jpeg)
+:::
+::::
+
+## ¿Qué podemos hacer?
+
+:::{style="margin-top: 40px;"}
+:::
+
+:::{style="font-size: 29px;"}
+- Pero la mejor solución es tratar de anticipar y prevenir la deserción.
+:::
+
+:::{style="margin-top: 30px;"}
+:::
+
+::::{.columns}
+:::{.column width="50%"}
+:::{style="font-size: 27px;"}
+:::{.incremental}
+- Personas que [no sepan a qué condición]{.alert} del tratamiento fueron asignadas.
+- Prometerle al grupo de control que [va a recibir el tratamiento]{.alert} na vez concluida la investigación.
+- [Planificar ex ante]{.alert} para poder contactar a los sujetos en para la recolección final de datos.
+- Contar con presupuesto para haver [seguimiento intensivo]{.alert} a una muestra aleatoria de los sujetos que desierten
+:::
+:::
+:::
+
+:::{.column width="50%"}
+![](./images/missing.jpg)
+:::
+::::
+
+## Los datos faltantes en covariables de contexto no son tan problemáticos
+
+:::{style="margin-top: 40px;"}
+:::
+
+::::{.columns}
+:::{.column width="50%"}
+:::{style="font-size: 25px;"}
+- La ausencia de datos en [covariables de contexto]{.alert} (es decir, variables cuyos valores no cambian como resultado del tratamiento) para algunas observaciones [es menos problemática]{.alert}. 
+
+:::{.incremental}
+- Podemos aprender sobre el efecto causal de un experimento incluso sin esas covariables
+  
+- Podemos usar la covariable de contexto según lo planeado [imputando los datos faltantes]{.alert}
+  
+- También podemos condicionar nuestro análisis directamente a esos datos faltantes
+:::
+:::
+:::
+
+:::{.column width="50%"}
+![](./images/Imputation.jpg)
+:::
+::::
+
+# Incumplimiento `r emo::ji('cross_mark_button')` `r emo::ji('raised_hand')` {background-color="#2d4563"}
+
+## Incumplimiento
+### Non-compliance
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{style="font-size: 27px;"}
+- En algunas ocasiones [las unidades que son asignadas al tratamiento terminan no recibiéndolo]{.alert}. Es decir, no cumplen la asignación.
+  
+- Si todas las unidades asignadas al grupo de control no toman el tratamiento, pero sólo algunas unidades asignadas al tratamiento sí lo toman, estamos frente a un caso de incumplimiento unilateral.
+      
+- El efecto de ser asignado al tratamiento no es el mismo que el de recibir el tratamiento.
+  
+- El efecto de recibir el tratamiento es comunmente conocido como "efecto local promedio del tratamiento" ([Local Average Treatment Effect, LATE]{.alert}) o efecto promedio del tratamiento para el cumplidor ([Complier Average Causal Effect, CACE]{.alert}).  
+  
+- La palabra “local” hace referencia a la idea de que el efecto solo aplica para las personas que toman el tratamiento cuando son asignadas a éste (el tipo de personas). 
+:::
+
+## LATE/CACE
+
+:::{style="margin-top: 40px;"}
+:::
+
+:::{style="font-size: 30px;"}
+- Es necesario que se cumplan dos supuestos para poder estimar el LATE/CACE a partir de un experimento aleatorio.
+
+:::{.incremental}
+  
+1. [Restricción de exclusión]{.alert}: la asignación del tratamiento solo afecta la variable de resultado a través de la recepción del tratamiento y no a través de ningún otro canal.
+2. [Supuesto de monotonicidad]{.alert}: no hay unidades desobedientes, es decir, unidades que toman el tratamiento solo cuando son asignadas a control pero no toman el tratamiento cuando son asignados a este.
+:::
+:::
+
+# Derrame {background-color="#2d4563"}
+
+## Derrame e interferencia entre unidades
+### Spillover and interference between units
+
+:::{style="margin-top: 30px;"}
+:::
+
+::::{.columns}
+:::{.column width="50%"}
+:::{style="font-size: 25px;"}
+- A veces tendremos sospechas de que la asignación al tratamiento de una unidad [afecta los resultados de otras unidades]{.alert}.
+
+- Si el tratamiento de una unidad afecta el resultado de otra unidad, estamos [violando uno de los supuestos básicos de inferencia causal]{.alert}.
+
+- Podemos seleccionar unidades que están lejos unas de otras para evitar la "transmisión" del tratamiento entre unidades.
+:::
+:::
+
+:::{.column width="50%"}
+![](./images/spillover.webp)
+:::
+::::
+
+## Estudiar los efectos secundarios
+
+:::{style="margin-top: 40px;"}
+:::
+
+:::{style="font-size: 28px;"}
+- Esto no es un problema si diseñas un estudio que permita investigar el derrame, es decir, que los resultados de una unidad pueden depender del tratamiento de otras unidades.
+
+- Para investigar los efectos de derrame:
+
+:::{.incremental}
+- Podemos recolectar datos de la variable de resultado para las unidades que nunca fueron elegibles para la asignación aleatoria al tratamiento, pero que estaban cerca de unidades que sí eran elegibles para el tratamiento y que pudieron verse afectadas por efectos de derrame.
+
+- Podemos utilizar un diseño de asignación aleatoria en dos etapas.
+
+- Podemos asignar grupos de unidades (p. Ej., Distritos) a diferentes niveles de intensidad de tratamiento (p. Ej., Usar una proporción diferente de aldeas en los distritos asignados al tratamiento).
+:::
+:::    
+
+# Efecto Hawthorne `r emo::ji('eyes')` `r emo::ji('camera_with_flash')` {background-color="#2d4563"}
+
+## Efecto Hawthorne
+
+:::{style="margin-top: 30px;"}
+:::
+
+::::{.columns}
+:::{.column width="50%"}
+:::{style="font-size: 27px;"}
+- El efecto Hawthorne: [saber que están siendo observados/estudiados]{.alert} puede llevar a los sujetos a comportarse de manera diferente.
+
+- Esto podría crear un [error de medición sistemático]{.alert} tanto en los grupos de tratamiento como en los de control.
+
+- También podría resultar de una [mayor atención prestada al grupo de tratamiento]{.alert}, deshaciendo la creación de grupos de tratamiento y control equivalentes creados a través de la asignación aleatoria
+:::
+:::
+
+:::{.column width="50%"}
+![](./images/hawthorne.jpg)
+:::
+::::
+
+## Buenas practicas
+
+:::{style="margin-top: 40px;"}
+:::
+
+-  Recolectar datos de la forma más discreta posible.
+   
+- En la medida de lo posible, nadie más que el propio sujeto debe conocer a qué condición de tratamiento fue asignado.
+
+- Encuestadores/investigadores deberían desconocer la condición de tratamiento de los sujetos.
+
+- No debemos hacer mediciones adicionales para el grupo de tratamiento.
+
+# No excluibilidad {background-color="#2d4563"}
+
+## Diferencias entre los grupos de tratamiento y control más allá del tratamiento
+
+:::{style="margin-top: 30px;"}
+:::
+
+- Manejar los grupos de tratamiento y control de manera diferente significa que las diferencias observadas en las variables de resultado entre estos grupos pueden deberse al tratamiento y/o al manejo diferente.
+   
+- Los ejemplos incluyen el uso de diferentes cuestionarios para la recolección de datos o rondas adicionales de recolección de datos para el grupo de tratamiento con la intención de obtener información sobre los mecanismos.
+   
+- Recuerde diseñar su estudio y sus encuesta para tratar todos los brazos de tratamiento por igual, excepto por el tratamiento en sí.
+
+# {background-image="./images/preguntas.jpg"}
+   
