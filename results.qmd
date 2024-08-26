@@ -1,0 +1,336 @@
+---
+title: "Interpretación de Resultados"
+subtitle: "Cómo leer una tabla de regresión"
+date: "2024-08-29"
+date-format: "DD-MM-YYYY"
+author:
+  - name: Danilo Freire
+    email: danilo.freire@emory.edu
+    affiliations: Emory University
+format:
+  clean-revealjs:
+    self-contained: true
+    footer: "[Interpretación](https://danilofreire.github.io/ldm/results.html)"
+bibliography: references.bib
+transition: slide
+transition-speed: default
+scrollable: true
+engine: knitr
+editor:
+  render-on-save: true
+---
+
+## Puntos clave para esta clase
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{style="font-size: 27px;"}
+- Estimando (lo que queremos saber)
+- Estimador (procedimiento aplicado a los datos)
+- Estimación (producida por ese procedimiento)
+- Error estándar y tipo
+- Valor $p$
+- Tamaño de la muestra
+- Clusters
+- Bloques
+- Media del grupo de control
+
+- Interpretar:
+  - Coeficiente de los tratamientos
+  - Coeficiente de los términos de interacción
+:::
+
+# Regresión `r emo::ji('chart_increasing')` {background-color="#2d4563"}
+
+## Regresión
+
+:::{style="margin-top: 30px;"}
+:::
+
+::::{.columns}
+:::{.column width="50%"}
+:::{style="font-size: 26px;"}
+$$ Y_i = \alpha_0 + \alpha_1 T_i + \epsilon_i$$
+
+- Una técnica para estimar la relación entre una variable de resultado y variables predictoras.
+
+- A menudo proponemos y estimamos una relación lineal porque la regresión sin covariables está estrechamente relacionada con la diferencia de medias.
+:::
+:::
+
+:::{.column width="50%"}
+![](./images/reg.png)
+:::
+::::
+
+## Algunas ecuaciones de regresión
+### Diversas formas de especificar un modelo
+
+:::{style="margin-top: 30px;"}
+:::
+
+$$ Y_i = \alpha_0 + \alpha_1 T_i + \epsilon_i$$
+
+$$ Y_i = \gamma_0 + \gamma_1 T_i + \gamma_2 X_i + \upsilon_i$$
+
+$$ Y_i = \delta_0 + \delta_1 T_i + \delta_2 X_i + \delta_3 T_iX_i + \zeta_i$$
+
+- Resultado: $Y_i$
+- Tratamiento: $T_i$
+- Covariable: $X_i$
+
+# Componentes principales de una tabla de regresión `r emo::ji('clipboard')` {background-color="#2d4563"}
+
+## El estudio
+
+:::{style="margin-top: 40px;"}
+:::
+
+![](images/GN_abstract.png)
+
+## El estudio
+
+:::{style="margin-top: 30px;"}
+:::
+
+:::{style="font-size: 26px;"}
+- Migración rural-urbana en India.
+
+- Posibles explicaciones para la baja integración política de los migrantes internos:
+
+- Fuertes vínculos con la región de origen
+- Barreras burocráticas
+- Exclusión por residentes locales y élites
+
+- Tratamiento (binario): campaña puerta a puerta para facilitar el registro de votantes de migrantes internos.
+
+- Tres indicadores de integración política.
+:::
+
+## Tabla
+
+![](images/GN_Table_nocov.png)
+
+- Cada columna es una regresión diferente y tiene un resultado (indicador) diferente.
+
+## La tabla
+
+![](images/GN_Table_nocov_1.png)
+
+- Para cada columna
+
+$Y_i = \widehat{\alpha}_0 + \widehat{\alpha}_1 T_i$
+
+- Sin covariables
+
+## Variable de resultado
+
+![](images/GN_Table_nocov_1c.png)
+
+- Valores de VD (variable dependiente) = {0,1}
+
+## El estimando
+
+![](images/GN_Table_nocov_1a.png)
+
+- El estimando es el efecto de intención de tratar (ITT, el efecto de la asignación al tratamiento = oferta de ayuda en el registro de votantes).
+
+## El estimador
+
+![](images/GN_Table_nocov_1a.png)
+
+- El estimador es la regresión por mínimos cuadrados ordinarios (OLS).
+
+## Efecto de intención de tratar (ATE de la oferta de ayuda)
+
+![](images/GN_Table_nocov_2.png)
+
+- Estimación del efecto de intención de tratar sobre si un migrante tiene una tarjeta de identificación de votante basada en la ciudad: 0,243.
+
+## Errores estándar robustos
+
+![](images/GN_Table_nocov_3.png)
+
+- Error estándar de esta estimación: 0,019.
+
+## Media del grupo de control
+
+![](images/GN_Table_nocov_6.png)
+
+- % de migrantes sin tratamiento que tienen una tarjeta de identificación de votante basada en la ciudad: 0,161.
+
+## Media del grupo de control
+
+A veces verás
+
+|             |                    |
+|-------------|-------------------:|
+|             |     Has City-based |
+|             |           Voter ID |
+| ----------- | ------------------ |
+| Treatment   |              0.243 |
+|             |            (0.019) |
+| Intercept   |              0.161 |
+|             |             (s.e.) |
+
+- Con un grupo de tratamiento y un grupo de control, sin covariables: intercepto = media del grupo de control.
+
+## Valor $p$
+
+![](images/GN_Table_nocov_4.png)
+
+- Valor $p$ (límite superior): $p< 0,001$
+
+## Tamaño de la muestra ($n$)
+
+![](images/GN_Table_nocov_5a.png)
+
+- Observaciones ($n$) = 2120
+
+## Regresión con covariables
+
+![](images/GN_Tab2_1.png)
+
+- ¿Cuál es la estimación del ITT en el primer resultado?
+- ¿Es diferente de la estimación del ITT sin covariables?
+
+## Regresión con covariables
+
+![](images/GN_Tab2_1.png)
+
+- $Y_i = \gamma_0 + \gamma_1 T_i + \gamma_2 X_i + \upsilon_i$
+
+- Estimación del ITT: $\widehat{\gamma}_1$ = 0,236
+
+## Coeficientes de las covariables
+
+- Generalmente puedes ignorar los coeficientes de las covariables. Ni siquiera se informan aquí.
+
+- Si se informan, no los interpretes como el efecto causal de la covariable.
+
+# Regresión con términos de interacción {background-color="#2d4563"}
+
+## Regresión con términos de interacción
+
+:::{style="margin-top: 40px;"}
+:::
+
+$$Y_i = \widehat{\delta}_0 + \widehat{\delta}_1 T_i + \widehat{\delta}_2 \text{EducPrim}_i + \widehat{\delta}_3 T_i\cdot\text{EducPrim}_i$$
+
+- A menudo usamos regresiones con términos de interacción cuando queremos estimar el ATE para diferentes subconjuntos de unidades (efecto promedio del tratamiento condicional, CATE).
+
+- Por ejemplo: El ATE para personas que han completado la educación primaria y el ATE para personas que no han completado la educación primaria.
+
+## Regresión con términos de interacción
+
+:::{style="margin-top: 40px;"}
+:::
+$$Y_i = \widehat{\delta}_0 + \widehat{\delta}_1 T_i + \widehat{\delta}_2 \text{EducPrim}_i + \widehat{\delta}_3 T_i\cdot\text{EducPrim}$$
+
+- Promedio $Y_i$ si $T_i=0$ y $EducPrim_i=0$ : $\widehat{\delta}_0$
+
+- Promedio $Y_i$ si $T_i=1$ y $EducPrim_i=0$ : $\widehat{\delta}_0 + \widehat{\delta}_1$
+
+- Promedio $Y_i$ si $T_i=0$ y $EducPrim_i=1$ :
+
+- Promedio $Y_i$ si $T_i=1$ y $EducPrim_i=1$ :
+
+## Regresión con términos de interacción
+
+![](images/GN_tab4.png)
+
+## Regresión con términos de interacción
+
+![](images/GN_tab4_1.png)
+
+## Regresión con términos de interacción
+
+Con $Muslim_i=0$, $SC/ST_i=0$, $HighIncome_i=0$, and $LongTermMigrant_i=0$:
+
+-   $Y_i = \delta_0 + \delta_1 T_i + \delta_2 X_i + \delta_3 T_iX_i + \zeta_i$
+
+-   $Y_i = \delta_0 + \widehat{\delta}_1 T_i + \widehat{\delta}_2 \text{PrimEduc}_i + \widehat{\delta}_3 T_i\cdot\text{PrimEduc}$
+
+-   $Y_i = 0.149 + 0.248 T_i - 0.058 \text{PrimEduc}_i + 0.083 T_i\cdot\text{PrimEduc}_i$
+
+## Regresión con términos de interacción
+
+:::{style="margin-top: 40px;"}
+:::
+
+$$Y_i = 0.149 + 0.248 T_i - 0.058 \text{PrimEduc}_i + 0.083 T_i\cdot\text{PrimEduc}_i$$
+
+- ¿Cuál es el efecto promedio del tratamiento (ATE) para $EducPrim_i=0$?
+
+- ¿Cuál es el efecto promedio del tratamiento (ATE) para $EducPrim_i=1$?
+
+- ¿Son estos efectos promedio del tratamiento condicionales diferentes?
+
+## Efectos promedio del tratamiento condicionales
+
+¿Son estos efectos promedio del tratamiento condicionales diferentes?
+
+![](images/GN_tab4_3.png)
+
+![](images/GN_tab4_4.png)
+
+# Aleatorización por clusters {background-color="#2d4563"}
+
+## Segundo tratamiento en el estudio de India
+
+- Posibles explicaciones para la baja integración política de los migrantes internos:
+
+- Fuertes vínculos con la región de origen
+- Barreras burocráticas $\rightarrow T1$
+- Exclusión por residentes locales y élites $\rightarrow T2$
+
+- Aproximadamente 2000 personas alrededor de 87 centros de votación en 4 bloques: Delhi/Lucknow \* por encima/debajo de la mediana del número de sujetos experimentales en el centro de votación
+
+## Segundo tratamiento en el estudio de India
+
+- Cartas, mensajes de WhatsApp y correos electrónicos en 2-4 semanas antes de la elección al diputado titular, candidatos a diputados y otros funcionarios locales informándoles que se había llevado a cabo recientemente una campaña de registro de votantes entre migrantes.
+
+## Los resultados
+
+![](images/GN_Tab5.png)
+
+- Índice = promedio de puntuaciones $z$
+
+- Puntuación $z$ para el indicador $k$ para el individuo $i$: $z_i^k$ = ($y_i^k$ - media del grupo de control) / desviación estándar del grupo de control
+
+## Unidades y clusters
+
+![](images/GN_Tab5.png)
+
+- Número de observaciones =
+
+- Número de clusters =
+
+## El estimador
+
+![](images/GN_Tab5_1.png)
+
+- Estimador: mínimos cuadrados ponderados, con clusters ponderados por igual, con efectos fijos por bloque y covariables individuales.
+
+## Errores estándar robustos por cluster
+
+![](images/GN_Tab5_2.png)
+
+## Estimación
+
+![](images/GN_Tab5.png)
+
+- ¿Cuál es el efecto promedio estimado de $T2$ en el índice de resultados?
+
+## Prueba de hipótesis
+
+![](images/GN_Tab5.png)
+
+- ¿En qué componentes del índice tiene $T2$ un efecto estadísticamente significativo?
+
+## Interpretación
+
+![](images/GN_Tab5_a.png)
+
+- ¿Estos resultados son positivos o negativos para los migrantes internos?
