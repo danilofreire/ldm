@@ -186,7 +186,7 @@ editor:
 :::{style="margin-top: 40px;"}
 :::
 
-:::{style="font-size: 30px;"}
+:::{style="font-size: 27px;"}
 - Es necesario que se cumplan dos supuestos para poder estimar el LATE/CACE a partir de un experimento aleatorio.
 
 :::{.incremental}
