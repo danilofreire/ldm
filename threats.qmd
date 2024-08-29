@@ -193,6 +193,9 @@ editor:
   
 1. [Restricción de exclusión]{.alert}: la asignación del tratamiento solo afecta la variable de resultado a través de la recepción del tratamiento y no a través de ningún otro canal.
 2. [Supuesto de monotonicidad]{.alert}: no hay unidades desobedientes, es decir, unidades que toman el tratamiento solo cuando son asignadas a control pero no toman el tratamiento cuando son asignados a este ("defiers").
+3. [Independencia]{.alert}: la asignación al tratamiento es independiente de la respuesta potencial a la asignación al tratamiento.
+4. [SUTVA]{.alert}: no hay interferencia entre las unidades y no hay versiones diferentes del tratamiento.
+5. [Relevancia del instrumento]{.alert}: el instrumento utilizado para asignar el tratamiento es relevante para la asignación al tratamiento ($Z$ está asociado con $T$).
 :::
 :::
 
