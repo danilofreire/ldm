@@ -168,6 +168,7 @@ editor:
 :::
 
 :::{style="font-size: 27px;"}
+:::{.incremental}
 - En algunas ocasiones [las unidades que son asignadas al tratamiento terminan no recibiéndolo]{.alert}. Es decir, no cumplen la asignación.
   
 - Si todas las unidades asignadas al grupo de control no toman el tratamiento, pero sólo algunas unidades asignadas al tratamiento sí lo toman, estamos frente a un caso de incumplimiento unilateral.
@@ -177,6 +178,7 @@ editor:
 - El efecto de recibir el tratamiento es comunmente conocido como "efecto local promedio del tratamiento" ([Local Average Treatment Effect, LATE]{.alert}) o efecto promedio del tratamiento para el cumplidor ([Complier Average Causal Effect, CACE]{.alert}).  
   
 - La palabra “local” hace referencia a la idea de que el efecto solo aplica para las personas que toman el tratamiento cuando son asignadas a éste (el tipo de personas). 
+:::
 :::
 
 ## LATE/CACE
@@ -190,7 +192,7 @@ editor:
 :::{.incremental}
   
 1. [Restricción de exclusión]{.alert}: la asignación del tratamiento solo afecta la variable de resultado a través de la recepción del tratamiento y no a través de ningún otro canal.
-2. [Supuesto de monotonicidad]{.alert}: no hay unidades desobedientes, es decir, unidades que toman el tratamiento solo cuando son asignadas a control pero no toman el tratamiento cuando son asignados a este.
+2. [Supuesto de monotonicidad]{.alert}: no hay unidades desobedientes, es decir, unidades que toman el tratamiento solo cuando son asignadas a control pero no toman el tratamiento cuando son asignados a este ("defiers").
 :::
 :::
 
@@ -209,7 +211,7 @@ editor:
 
 - Si el tratamiento de una unidad afecta el resultado de otra unidad, estamos [violando uno de los supuestos básicos de inferencia causal]{.alert}.
 
-- Podemos seleccionar unidades que están lejos unas de otras para evitar la "transmisión" del tratamiento entre unidades.
+- Podemos seleccionar unidades que están [lejos unas de otras]{.alert} para evitar la "transmisión" del tratamiento entre unidades.
 :::
 :::
 
@@ -224,16 +226,16 @@ editor:
 :::
 
 :::{style="font-size: 28px;"}
-- Esto no es un problema si diseñas un estudio que permita investigar el derrame, es decir, que los resultados de una unidad pueden depender del tratamiento de otras unidades.
+- Esto no es un problema [si diseñas un estudio que permita investigar el derrame]{.alert}, es decir, que los resultados de una unidad pueden depender del tratamiento de otras unidades.
 
 - Para investigar los efectos de derrame:
 
 :::{.incremental}
-- Podemos recolectar datos de la variable de resultado para las unidades que nunca fueron elegibles para la asignación aleatoria al tratamiento, pero que estaban cerca de unidades que sí eran elegibles para el tratamiento y que pudieron verse afectadas por efectos de derrame.
+- Podemos [recolectar datos]{.alert} de la variable de resultado para las unidades que nunca fueron elegibles para la asignación aleatoria al tratamiento, pero que estaban cerca de unidades que sí eran elegibles para el tratamiento y que pudieron verse afectadas por efectos de derrame.
 
-- Podemos utilizar un diseño de asignación aleatoria en dos etapas.
+- Podemos utilizar un [diseño de asignación aleatoria en dos etapas]{.alert}.
 
-- Podemos asignar grupos de unidades (p. Ej., Distritos) a diferentes niveles de intensidad de tratamiento (p. Ej., Usar una proporción diferente de aldeas en los distritos asignados al tratamiento).
+- Podemos asignar grupos de unidades (p. Ej., Distritos) [a diferentes niveles de intensidad de tratamiento]{.alert} (p. Ej., Usar una proporción diferente de aldeas en los distritos asignados al tratamiento).
 :::
 :::    
 

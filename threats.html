@@ -1317,13 +1317,15 @@ Danilo Freire
 
 </div>
 <div style="font-size: 27px;">
+<div>
 <ul>
-<li><p>En algunas ocasiones <span class="alert">las unidades que son asignadas al tratamiento terminan no recibiéndolo</span>. Es decir, no cumplen la asignación.</p></li>
-<li><p>Si todas las unidades asignadas al grupo de control no toman el tratamiento, pero sólo algunas unidades asignadas al tratamiento sí lo toman, estamos frente a un caso de incumplimiento unilateral.</p></li>
-<li><p>El efecto de ser asignado al tratamiento no es el mismo que el de recibir el tratamiento.</p></li>
-<li><p>El efecto de recibir el tratamiento es comunmente conocido como “efecto local promedio del tratamiento” (<span class="alert">Local Average Treatment Effect, LATE</span>) o efecto promedio del tratamiento para el cumplidor (<span class="alert">Complier Average Causal Effect, CACE</span>).</p></li>
-<li><p>La palabra “local” hace referencia a la idea de que el efecto solo aplica para las personas que toman el tratamiento cuando son asignadas a éste (el tipo de personas).</p></li>
+<li class="fragment"><p>En algunas ocasiones <span class="alert">las unidades que son asignadas al tratamiento terminan no recibiéndolo</span>. Es decir, no cumplen la asignación.</p></li>
+<li class="fragment"><p>Si todas las unidades asignadas al grupo de control no toman el tratamiento, pero sólo algunas unidades asignadas al tratamiento sí lo toman, estamos frente a un caso de incumplimiento unilateral.</p></li>
+<li class="fragment"><p>El efecto de ser asignado al tratamiento no es el mismo que el de recibir el tratamiento.</p></li>
+<li class="fragment"><p>El efecto de recibir el tratamiento es comunmente conocido como “efecto local promedio del tratamiento” (<span class="alert">Local Average Treatment Effect, LATE</span>) o efecto promedio del tratamiento para el cumplidor (<span class="alert">Complier Average Causal Effect, CACE</span>).</p></li>
+<li class="fragment"><p>La palabra “local” hace referencia a la idea de que el efecto solo aplica para las personas que toman el tratamiento cuando son asignadas a éste (el tipo de personas).</p></li>
 </ul>
+</div>
 </div>
 </section>
 <section id="latecace" class="slide level2 scrollable">
@@ -1338,7 +1340,7 @@ Danilo Freire
 <div>
 <ol type="1">
 <li class="fragment"><span class="alert">Restricción de exclusión</span>: la asignación del tratamiento solo afecta la variable de resultado a través de la recepción del tratamiento y no a través de ningún otro canal.</li>
-<li class="fragment"><span class="alert">Supuesto de monotonicidad</span>: no hay unidades desobedientes, es decir, unidades que toman el tratamiento solo cuando son asignadas a control pero no toman el tratamiento cuando son asignados a este.</li>
+<li class="fragment"><span class="alert">Supuesto de monotonicidad</span>: no hay unidades desobedientes, es decir, unidades que toman el tratamiento solo cuando son asignadas a control pero no toman el tratamiento cuando son asignados a este (“defiers”).</li>
 </ol>
 </div>
 </div>
@@ -1360,7 +1362,7 @@ Danilo Freire
 <ul>
 <li><p>A veces tendremos sospechas de que la asignación al tratamiento de una unidad <span class="alert">afecta los resultados de otras unidades</span>.</p></li>
 <li><p>Si el tratamiento de una unidad afecta el resultado de otra unidad, estamos <span class="alert">violando uno de los supuestos básicos de inferencia causal</span>.</p></li>
-<li><p>Podemos seleccionar unidades que están lejos unas de otras para evitar la “transmisión” del tratamiento entre unidades.</p></li>
+<li><p>Podemos seleccionar unidades que están <span class="alert">lejos unas de otras</span> para evitar la “transmisión” del tratamiento entre unidades.</p></li>
 </ul>
 </div>
 </div><div class="column" style="width:50%;">
@@ -1375,14 +1377,14 @@ Danilo Freire
 </div>
 <div style="font-size: 28px;">
 <ul>
-<li><p>Esto no es un problema si diseñas un estudio que permita investigar el derrame, es decir, que los resultados de una unidad pueden depender del tratamiento de otras unidades.</p></li>
+<li><p>Esto no es un problema <span class="alert">si diseñas un estudio que permita investigar el derrame</span>, es decir, que los resultados de una unidad pueden depender del tratamiento de otras unidades.</p></li>
 <li><p>Para investigar los efectos de derrame:</p></li>
 </ul>
 <div>
 <ul>
-<li class="fragment"><p>Podemos recolectar datos de la variable de resultado para las unidades que nunca fueron elegibles para la asignación aleatoria al tratamiento, pero que estaban cerca de unidades que sí eran elegibles para el tratamiento y que pudieron verse afectadas por efectos de derrame.</p></li>
-<li class="fragment"><p>Podemos utilizar un diseño de asignación aleatoria en dos etapas.</p></li>
-<li class="fragment"><p>Podemos asignar grupos de unidades (p. Ej., Distritos) a diferentes niveles de intensidad de tratamiento (p. Ej., Usar una proporción diferente de aldeas en los distritos asignados al tratamiento).</p></li>
+<li class="fragment"><p>Podemos <span class="alert">recolectar datos</span> de la variable de resultado para las unidades que nunca fueron elegibles para la asignación aleatoria al tratamiento, pero que estaban cerca de unidades que sí eran elegibles para el tratamiento y que pudieron verse afectadas por efectos de derrame.</p></li>
+<li class="fragment"><p>Podemos utilizar un <span class="alert">diseño de asignación aleatoria en dos etapas</span>.</p></li>
+<li class="fragment"><p>Podemos asignar grupos de unidades (p. Ej., Distritos) <span class="alert">a diferentes niveles de intensidad de tratamiento</span> (p. Ej., Usar una proporción diferente de aldeas en los distritos asignados al tratamiento).</p></li>
 </ul>
 </div>
 </div>
